@@ -7,4 +7,4 @@ requests
 logzero
 simplejson
 pytube>=11.0.2
-lxml>=4.0.0
+lxml[html_clean]>=4.0.0
