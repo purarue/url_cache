@@ -30,7 +30,7 @@ class Summary:
 
 def _default(o: Any) -> Any:
     if is_dataclass(o):
-        return asdict(o)
+        return asdict(o)  # type: ignore[call-overload]
     elif isinstance(o, datetime):
         return str(o)
     raise TypeError(f"no way to serialize {o} {type(o)}")
