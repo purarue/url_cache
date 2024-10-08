@@ -156,13 +156,17 @@ class SummaryDirCache:
             parser.name: parser for parser in self.file_parsers
         }
 
-    def parse_file(self, p: Path) -> Tuple[str, Any]:
+    def parse_file(self, p: Path) -> Tuple[str, Any] | None:
         """
         Takes a path and tries to parse it with each self.file_parsers
         """
         for parser in self.file_parsers:
             if parser.matches(p):
                 return parser.name, parser.load(p)
+        # ignore sync conflicts if syncing data store between machines
+        # https://syncthing.net/
+        if "sync-conflict" in p.name:
+            return None
         # hmm - warning instead?
         raise URLCacheException(f"No way to parse {str(p)}")
 
@@ -178,8 +182,14 @@ class SummaryDirCache:
             # ignore the key file, used to handle hashing/storing the URL
             if target.name in IGNORE_FILES:
                 continue
-            name, data = self.parse_file(target)
-            res[name] = data
+            target_res = self.parse_file(target)
+            if target_res is not None:
+                name, data = target_res
+                res[name] = data
+            else:
+                # TODO: log warning
+                continue
+
         return res
 
     def get(self, url: str) -> Optional[Summary]:
