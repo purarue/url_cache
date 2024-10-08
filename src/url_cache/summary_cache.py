@@ -156,7 +156,7 @@ class SummaryDirCache:
             parser.name: parser for parser in self.file_parsers
         }
 
-    def parse_file(self, p: Path) -> Tuple[str, Any] | None:
+    def parse_file(self, p: Path) -> Optional[Tuple[str, Any]]:
         """
         Takes a path and tries to parse it with each self.file_parsers
         """
