@@ -45,7 +45,7 @@ IGNORED = {
     "history",
 }
 
-# dont cache animelist/mangalists here, use https://github.com/seanbreckenridge/malexport/ to keep track of them
+# dont cache animelist/mangalists here, use https://github.com/purarue/malexport/ to keep track of them
 
 
 # if no jikan_urls, shouldn't request this, its a dynamic URL and saving

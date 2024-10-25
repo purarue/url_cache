@@ -13,7 +13,7 @@ from .myanimelist.core import MyAnimeList
 # https://www.python.org/dev/peps/pep-0420/#dynamic-path-computation
 # https://packaging.python.org/guides/creating-and-discovering-plugins/#using-namespace-packages
 # https://packaging.python.org/guides/packaging-namespace-packages/
-# https://github.com/seanbreckenridge/reorder_editable
+# https://github.com/purarue/reorder_editable
 
 # TODO: add more site-specific extractors here
 EXTRACTORS: List[Type[AbstractSite]] = [Youtube, StackOverflow, MyAnimeList]

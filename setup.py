@@ -5,9 +5,8 @@ pkg = "url_cache"
 setup(
     name=pkg,
     version="0.0.9",
-    url="https://github.com/seanbreckenridge/url_cache",
-    author="Sean Breckenridge",
-    author_email="seanbrecke@gmail.com",
+    url="https://github.com/purarue/url_cache",
+    author="purarue",
     description=(
         """A file system cache which saves URL metadata and summarizes content"""
     ),
