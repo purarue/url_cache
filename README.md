@@ -28,7 +28,7 @@ This is meant to provide more context to any of my tools which use URLs. If I [w
 ```python
 >>> from url_cache.core import URLCache
 >>> u = URLCache()
->>> data = u.get("https://sean.fish/")
+>>> data = u.get("https://purarue.xyz/")
 >>> data.metadata["images"][-1]
 {'src': 'https://raw.githubusercontent.com/purarue/glue/master/assets/screenshot.png', 'alt': 'screenshot', 'type': 'body_image', 'width': 600}
 >>> data.metadata["description"]
