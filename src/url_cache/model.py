@@ -29,7 +29,7 @@ class Summary:
 
 
 def _default(o: Any) -> Any:
-    if is_dataclass(o):
+    if is_dataclass(o) and not isinstance(o, type):
         return asdict(o)  # type: ignore[call-overload]
     elif isinstance(o, datetime):
         return str(o)
