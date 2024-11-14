@@ -165,7 +165,7 @@ class SummaryDirCache:
                 return parser.name, parser.load(p)
         # ignore sync conflicts if syncing data store between machines
         # https://syncthing.net/
-        if "sync-conflict" in p.name:
+        if "sync-conflict" in p.name or ".syncthing" in p.name:
             return None
         # hmm - warning instead?
         raise URLCacheException(f"No way to parse {str(p)}")
