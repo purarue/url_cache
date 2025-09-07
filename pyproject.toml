@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "url_cache"
+version = "0.0.9"
+description = "A file system cache which saves URL metadata and summarizes content"
+readme = "README.md"
+authors = [{ name = "purarue" }]
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["url", "cache", "metadata", "youtube", "subtitles"]
+requires-python = ">=3.9"
+classifiers = [
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+  "appdirs>=1.4.4",
+  "lassie>=0.11.11",
+  "readability-lxml>=0.8.1",
+  "backoff>=1.10.0",
+  "click>=7.1.2",
+  "requests",
+  "logzero",
+  "simplejson",
+  "pytube>=11.0.2",
+  "lxml[html_clean]>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/purarue/url_cache"
+
+[project.optional-dependencies]
+testing = ["pytest", "mypy", "flake8", "vcrpy"]
+
+[tool.setuptools]
+zip-safe = false
+package-dir = { "" = "src" }
+package-data = { "url_cache" = ["py.typed"] }
+include-package-data = true
+packages = { find = { where = ["src"], include = ["url_cache*"] } }
+
+[project.scripts]
+url_cache = "url_cache.__main__:main"
+
+[tool.mypy]
+pretty = true
+show_error_context = true
+show_error_codes = true
+check_untyped_defs = true
+namespace_packages = true
+disallow_any_generics = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+
+[tool.pytest.ini_options]
+addopts = "--ignore=./src/url_cache/ ./tests/"
