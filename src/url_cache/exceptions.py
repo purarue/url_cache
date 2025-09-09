@@ -5,4 +5,3 @@ class URLCacheException(Exception):
 class URLCacheRequestException(URLCacheException):
     """Encountered a request error while requesting a URL"""
 
-    pass

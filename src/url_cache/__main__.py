@@ -5,7 +5,7 @@ CLI interface
 import sys
 import logging
 from pathlib import Path
-from typing import List, Optional, Callable, Dict
+from typing import Optional, Callable
 
 import click
 
@@ -21,7 +21,7 @@ from .model import dumps
 # cache object for all commands
 ucache: Optional[URLCache] = None
 
-OPTIONS_HELP: Dict[str, str] = {
+OPTIONS_HELP: dict[str, str] = {
     "subtitle_language": "Subtitle language for Youtube Subtitles",
     "skip_subtitles": "Skip downloading Youtube Subtitles",
     "summarize_html": "Use readability to summarize html. Otherwise saves the entire HTML document",
@@ -96,14 +96,14 @@ def get(quiet: bool, url: str) -> None:
 
     Prints results as JSON
     """
-    sinfo_list: List[Summary] = []
+    sinfo_list: list[Summary] = []
     for u in url:
         sinfo_list.append(ucache.get(u))  # type: ignore[union-attr]
     if not quiet:
         click.echo(dumps(sinfo_list))
 
 
-def list_keys(cache_dir: Path) -> List[Path]:
+def list_keys(cache_dir: Path) -> list[Path]:
     """
     Helper function which returns the absolute path of all matched keyfiles
     """
@@ -149,8 +149,8 @@ def in_cache(url: str) -> None:
 @main.command()
 def export() -> None:
     """Print all cached information as JSON"""
-    keyfiles: List[Path] = list_keys(ucache.cache_dir)  # type: ignore[union-attr]
-    sinfo_list: List[Summary] = []
+    keyfiles: list[Path] = list_keys(ucache.cache_dir)  # type: ignore[union-attr]
+    sinfo_list: list[Summary] = []
     for k in keyfiles:
         sinfo_list.append(ucache.get(k.read_text()))  # type: ignore[union-attr]
     click.echo(dumps(sinfo_list))

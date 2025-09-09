@@ -1,4 +1,3 @@
-from typing import List, Type
 from .abstract import AbstractSite
 from .youtube.core import Youtube
 from .stackoverflow import StackOverflow
@@ -16,4 +15,4 @@ from .myanimelist.core import MyAnimeList
 # https://github.com/purarue/reorder_editable
 
 # TODO: add more site-specific extractors here
-EXTRACTORS: List[Type[AbstractSite]] = [Youtube, StackOverflow, MyAnimeList]
+EXTRACTORS: list[type[AbstractSite]] = [Youtube, StackOverflow, MyAnimeList]

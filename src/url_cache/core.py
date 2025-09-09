@@ -9,7 +9,7 @@ import time
 from functools import lru_cache
 from pathlib import Path
 from datetime import datetime, timedelta
-from typing import Optional, Union, Any, List, TypeVar
+from typing import Optional, Union, Any, TypeVar
 
 import backoff  # type: ignore[import]
 from logzero import setup_logger, formatter  # type: ignore[import]
@@ -59,8 +59,8 @@ class URLCache:
         cache_dir: Optional[Union[str, Path]] = None,
         loglevel: int = DEFAULT_LOGLEVEL,
         sleep_time: int = DEFAULT_SLEEP_TIME,
-        additional_extractors: Optional[List[Any]] = None,
-        file_parsers: Optional[List[FileParser[T]]] = None,
+        additional_extractors: Optional[list[Any]] = None,
+        file_parsers: Optional[list[FileParser[T]]] = None,
         options: Optional[Options] = None,
     ) -> None:
         """
@@ -134,7 +134,7 @@ class URLCache:
                     self.logger.warning(f"{ext} is not a subclass of AbstractSite")
                 self.extractor_classes.append(ext)
 
-        self.extractors: List[AbstractSite] = [
+        self.extractors: list[AbstractSite] = [
             e(uc=self) for e in self.extractor_classes
         ]
 
@@ -221,7 +221,7 @@ class URLCache:
         fibo_backoff, URLCacheRequestException, max_tries=3, on_backoff=backoff_warn  # type: ignore[arg-type]
     )
     def _fetch_lassie(self, url: str) -> Optional[Json]:
-        self.logger.debug("Fetching metadata for {}".format(url))
+        self.logger.debug(f"Fetching metadata for {url}")
         try:
             meta: Json = self.lassie.fetch(
                 url,
@@ -235,7 +235,7 @@ class URLCache:
             self.logger.warning("Could not retrieve metadata from lassie: " + str(le))
         if self._response is not None and self._response.status_code == 429:
             raise URLCacheRequestException(
-                "Received 429 for URL {}, waiting to retry...".format(url)
+                f"Received 429 for URL {url}, waiting to retry..."
             )
         return None
 

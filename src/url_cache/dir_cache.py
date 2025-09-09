@@ -4,7 +4,6 @@ An hash-based, file system cache
 
 import os
 import shutil
-from typing import List
 from hashlib import md5
 
 
@@ -12,7 +11,7 @@ class DirCacheMiss(Exception):
     pass
 
 
-def subdirs(path: str) -> List[str]:
+def subdirs(path: str) -> list[str]:
     """
     Returns a list of subdirectores (that exist) for a existing directory
     """
@@ -23,7 +22,7 @@ def keyfile_matches_contents(key: str, path: str) -> bool:
     """
     Helper function to check if a file matches the key we're trying to find
     """
-    with open(path, "r") as f:
+    with open(path) as f:
         contents = f.read()
     return contents == key
 
@@ -57,7 +56,7 @@ class DirCache:
         """
         base: str = self.base_dir_hashed_path(key)
         if not os.path.exists(base):
-            raise DirCacheMiss("Base dir for hash doesn't exist: {}".format(base))
+            raise DirCacheMiss(f"Base dir for hash doesn't exist: {base}")
         # check if keyfile matches any of the existing directories
         for s in subdirs(base):
             target_key = os.path.join(s, "key")
@@ -138,7 +137,7 @@ class DirCache:
         '/tmp/4/3/7/b930db84b8079c2dd804a71936b5f'
         """
         md5_hash: str = self.__class__.hash_key(key)
-        parts: List[str] = [self.base]
+        parts: list[str] = [self.base]
         for i in range(3):
             parts.append(md5_hash[i])
         parts.append(md5_hash[3:])

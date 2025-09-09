@@ -5,7 +5,7 @@ Handles converting the Youtube subtitles to an SRT file
 import re
 import html
 
-from typing import List, Tuple, Optional, Union
+from typing import Optional, Union
 
 
 # Conversion code from
@@ -18,10 +18,10 @@ def format_srt_time(sec_time: Union[str, float]) -> str:
     sec, micro = str(sec_time).split(".")
     m, s = divmod(int(sec), 60)
     h, m = divmod(m, 60)
-    return "{:02}:{:02}:{:02},{}".format(h, m, s, micro)
+    return f"{h:02}:{m:02}:{s:02},{micro}"
 
 
-def format_srt_line(i: int, elms: Tuple[str, str, str]) -> str:
+def format_srt_line(i: int, elms: tuple[str, str, str]) -> str:
     """Print a subtitle in srt format."""
     return "{}\n{} --> {}\n{}\n\n".format(
         i,
@@ -36,11 +36,11 @@ def convert_html(text: str) -> str:
 
 
 def to_srt(buf: str) -> str:
-    out_srt: List[str] = []
-    srt_data: List[str] = "".join(buf.replace("\n", " ")).split("><")
+    out_srt: list[str] = []
+    srt_data: list[str] = "".join(buf.replace("\n", " ")).split("><")
     i: int = 0
     for text in srt_data:
-        parsed: Optional[Tuple[str, str, str]] = parse_line(text)
+        parsed: Optional[tuple[str, str, str]] = parse_line(text)
         if parsed is not None:
             i += 1
             out_srt.append(format_srt_line(i, parsed))
@@ -48,7 +48,7 @@ def to_srt(buf: str) -> str:
     return out_srt_string
 
 
-def parse_line(text: str) -> Optional[Tuple[str, str, str]]:
+def parse_line(text: str) -> Optional[tuple[str, str, str]]:
     """Parse a subtitle."""
     m = re.match(pat, text)
     if m:

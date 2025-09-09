@@ -7,7 +7,7 @@ and creates the corresponding URLs to request for Jikan
 """
 
 import re
-from typing import Optional, List, NamedTuple
+from typing import Optional, NamedTuple
 
 from urllib.parse import urlparse, parse_qs, ParseResult
 
@@ -52,7 +52,7 @@ IGNORED = {
 # it in cache wouldn't be that useful
 class MalParseResult(NamedTuple):
     cleaned: str
-    jikan_urls: List[str]
+    jikan_urls: list[str]
 
 
 class Version4:

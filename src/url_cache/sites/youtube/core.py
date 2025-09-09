@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional
 from urllib.parse import urlparse, parse_qs, ParseResult
 
 from .subtitles_downloader import YoutubeSubtitlesException, download_subs
@@ -49,7 +49,7 @@ class Youtube(AbstractSite):
     Youtube site extractor to get subtitles for videos
     """
 
-    def file_parsers(self) -> List[FileParser[str]]:
+    def file_parsers(self) -> list[FileParser[str]]:
         return [
             FileParser(
                 name="subtitles",
@@ -92,7 +92,7 @@ class Youtube(AbstractSite):
             # failed, just return URL as it was
             return url
         else:
-            return "https://www.youtube.com/watch?v={}".format(yt_id)
+            return f"https://www.youtube.com/watch?v={yt_id}"
 
     def _delete_unnecessary_info(self, summary: Summary) -> Summary:
         """

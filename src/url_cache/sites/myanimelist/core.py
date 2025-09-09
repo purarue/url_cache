@@ -1,5 +1,5 @@
 import time
-from typing import Optional, List, TYPE_CHECKING, Dict
+from typing import Optional, TYPE_CHECKING
 
 import requests
 import backoff  # type: ignore[import]
@@ -28,7 +28,7 @@ class MyAnimeList(AbstractSite):
         self.jikan_session = requests.Session()
         self.jikan_sleep_time = 1
 
-    def file_parsers(self) -> List[FileParser[Json]]:
+    def file_parsers(self) -> list[FileParser[Json]]:
         return [
             FileParser(
                 name="jikan",
@@ -60,7 +60,7 @@ class MyAnimeList(AbstractSite):
         m: Optional[MalParseResult] = self.url_parser.parse_url(url)
         if m is None:
             return summary
-        data: Dict[str, Json] = {}
+        data: dict[str, Json] = {}
         for url in m.jikan_urls:
             try:
                 data[url] = self._jikan_request(url)

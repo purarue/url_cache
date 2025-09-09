@@ -3,13 +3,9 @@ from datetime import datetime
 from typing import (
     Optional,
     Generic,
-    List,
-    Dict,
     Any,
-    Tuple,
     Callable,
     TypeVar,
-    Set,
 )
 from pathlib import Path
 
@@ -107,7 +103,7 @@ def _dump_file_datetime(data: datetime, p: Path) -> None:
     p.write_text(str(int(data.timestamp())))
 
 
-DEFAULT_FILE_PARSERS: List[FileParser[Any]] = [
+DEFAULT_FILE_PARSERS: list[FileParser[Any]] = [
     FileParser(
         name="metadata",
         ext=".json",
@@ -129,10 +125,10 @@ DEFAULT_FILE_PARSERS: List[FileParser[Any]] = [
 ]
 
 
-SUMMARY_ATTRS: Set[str] = set(Summary.__annotations__.keys())
+SUMMARY_ATTRS: set[str] = set(Summary.__annotations__.keys())
 # url is already stored as the 'key' file, don't need store again
 SUMMARY_ATTRS.remove("url")
-IGNORE_FILES: Set[str] = set(["key", "url.txt"])
+IGNORE_FILES: set[str] = {"key", "url.txt"}
 
 
 class SummaryDirCache:
@@ -144,19 +140,19 @@ class SummaryDirCache:
     """
 
     def __init__(
-        self, data_dir: Path, *, file_parsers: Optional[List[FileParser[Any]]] = None
+        self, data_dir: Path, *, file_parsers: Optional[list[FileParser[Any]]] = None
     ):
         self.data_dir: Path = data_dir
         self.dir_cache = DirCache(str(self.data_dir))
-        self.file_parsers: List[FileParser[Any]] = DEFAULT_FILE_PARSERS
+        self.file_parsers: list[FileParser[Any]] = DEFAULT_FILE_PARSERS
         if file_parsers is not None:
             self.file_parsers.extend(file_parsers)
         # map name of attribute to the parsers
-        self.attr_file_parsers: Dict[str, FileParser[Any]] = {
+        self.attr_file_parsers: dict[str, FileParser[Any]] = {
             parser.name: parser for parser in self.file_parsers
         }
 
-    def parse_file(self, p: Path) -> Optional[Tuple[str, Any]]:
+    def parse_file(self, p: Path) -> Optional[tuple[str, Any]]:
         """
         Takes a path and tries to parse it with each self.file_parsers
         """
@@ -170,7 +166,7 @@ class SummaryDirCache:
         # hmm - warning instead?
         raise URLCacheException(f"No way to parse {str(p)}")
 
-    def scan_directory(self, keydir: Path) -> Dict[str, Any]:
+    def scan_directory(self, keydir: Path) -> dict[str, Any]:
         """
         Given the target directory, recursively scans for files
         and applies the 'file_parsers' against each file
@@ -202,7 +198,7 @@ class SummaryDirCache:
         key: Path = Path(self.dir_cache.get(url))
 
         # store info for this in a dict and splat onto dataclass at end
-        sdict: Dict[str, Any] = {"url": url}
+        sdict: dict[str, Any] = {"url": url}
 
         for attr_name, data in self.scan_directory(key).items():
             # top level attr on Summary dataclass

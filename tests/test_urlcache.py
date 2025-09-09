@@ -3,7 +3,7 @@ import os
 import shutil
 from pathlib import Path
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import Any
 
 import pytest
 import vcr  # type: ignore[import]
@@ -157,7 +157,7 @@ def test_image(ucache: URLCache) -> None:
     # assert Summary values
     assert summ_resp.html_summary is None  # shouldn't have any HTML
     assert "subtitles" not in summ_resp.data  # no subtitles, obviously
-    imgs: List[Dict[str, Any]] = summ_resp.metadata["images"]
+    imgs: list[dict[str, Any]] = summ_resp.metadata["images"]
     assert len(imgs) == 1
     assert imgs[0]["type"] == "body_image"
     assert imgs[0]["src"].startswith("https://i.picsum.photos/id/")

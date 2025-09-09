@@ -5,7 +5,7 @@ Downloads subtitles from youtube
 import json
 import html
 import urllib.parse
-from typing import Dict, Any
+from typing import Any
 
 import requests
 
@@ -21,8 +21,8 @@ class YoutubeSubtitlesException(Exception):
 
 def download_subs(video_identifier: str, target_language: str) -> str:
     try:
-        video_info: Dict[str, Any] = get_video_info(video_identifier)
-        track_urls: Dict[str, Any] = get_sub_track_urls(video_info)
+        video_info: dict[str, Any] = get_video_info(video_identifier)
+        track_urls: dict[str, Any] = get_sub_track_urls(video_info)
         target_track_url: str = select_target_lang_track_url(
             track_urls, target_language
         )
@@ -32,15 +32,15 @@ def download_subs(video_identifier: str, target_language: str) -> str:
         raise YoutubeSubtitlesException(str(e))
 
 
-def get_video_info(video_id: str) -> Dict[str, Any]:
+def get_video_info(video_id: str) -> dict[str, Any]:
     url = video_info_url(video_id, f"https://www.youtube.com/watch?v={video_id}")
     resp: requests.Response = requests.get(url)
     return urllib.parse.parse_qs(resp.text)
 
 
-def get_sub_track_urls(video_info: Dict[str, Any]) -> Dict[str, Any]:
+def get_sub_track_urls(video_info: dict[str, Any]) -> dict[str, Any]:
     try:
-        video_response: Dict[str, Any] = json.loads(video_info["player_response"][0])
+        video_response: dict[str, Any] = json.loads(video_info["player_response"][0])
         captions = video_response["captions"]
         caption_tracks = captions["playerCaptionsTracklistRenderer"]["captionTracks"]
         return {
@@ -54,7 +54,7 @@ def get_sub_track_urls(video_info: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def select_target_lang_track_url(
-    track_urls: Dict[str, Any], target_language: str
+    track_urls: dict[str, Any], target_language: str
 ) -> str:
     try:
         chosen_lang: str = track_urls[target_language]

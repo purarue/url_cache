@@ -1,7 +1,7 @@
 import os
 import tempfile
 import shutil
-from typing import Generator
+from collections.abc import Generator
 
 import pytest
 from url_cache.core import URLCache

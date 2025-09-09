@@ -3,7 +3,8 @@ import warnings
 from datetime import timedelta
 from urllib.parse import unquote
 from pathlib import Path
-from typing import Union, Generator, Dict, Any
+from typing import Union, Any
+from collections.abc import Generator
 
 import backoff  # type: ignore[import]
 
@@ -15,7 +16,7 @@ def normalize_path(p: Union[str, Path]) -> Path:
     elif isinstance(p, str):
         pth = Path(p)
     else:
-        raise TypeError("Expected 'str' or 'pathlib.Path', received {}".format(type(p)))
+        raise TypeError(f"Expected 'str' or 'pathlib.Path', received {type(p)}")
     return pth.expanduser().absolute()
 
 
@@ -30,7 +31,7 @@ def fibo_backoff() -> Generator[float, None, None]:
     yield from fib
 
 
-def backoff_warn(details: Dict[str, Any]) -> None:
+def backoff_warn(details: dict[str, Any]) -> None:
     warning_msg: str = "Backing off {wait:0.1f} seconds afters {tries} tries with {args} {kwargs}".format(
         **details
     )
