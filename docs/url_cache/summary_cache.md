@@ -4,8 +4,12 @@ Module url_cache.summary_cache
 Classes
 -------
 
-`FileParser(name: str, ext: str, *, load_func: Callable[[pathlib.Path], ~T], dump_func: Callable[[~T, pathlib.Path], NoneType])`
+`FileParser(name: str, ext: str, *, load_func: Callable[[pathlib.Path], ~T], dump_func: Callable[[~T, pathlib.Path], None])`
 :   Encapsulates some function which parses an underlying file for a field on the metadata
+
+    ### Ancestors (in MRO)
+
+    * typing.Generic
 
     ### Instance variables
 
@@ -14,7 +18,7 @@ Classes
 
     ### Methods
 
-    `dump(self, data: ~T, p: pathlib.Path) ‑> NoneType`
+    `dump(self, data: ~T, p: pathlib.Path) ‑> None`
     :
 
     `load(self, p: pathlib.Path) ‑> ~T`
@@ -23,7 +27,7 @@ Classes
     `matches(self, p: pathlib.Path) ‑> bool`
     :
 
-`SummaryDirCache(data_dir: pathlib.Path, *, file_parsers: Optional[List[url_cache.summary_cache.FileParser]] = None)`
+`SummaryDirCache(data_dir: pathlib.Path, *, file_parsers: list[url_cache.summary_cache.FileParser[typing.Any]] | None = None)`
 :   Interface to the underlying DirCache, which serializes/deserializes information
     from the Summary object into each individual file
     
@@ -31,7 +35,7 @@ Classes
 
     ### Methods
 
-    `get(self, url: str) ‑> Optional[url_cache.model.Summary]`
+    `get(self, url: str) ‑> url_cache.model.Summary | None`
     :   Get data for the 'url' from cache, or None if it doesn't exist
 
     `has(self, url: str) ‑> bool`
@@ -50,7 +54,7 @@ Classes
         
         meant to be used to 'retry' getting url metadata, in case none was retrieved
 
-    `parse_file(self, p: pathlib.Path) ‑> Tuple[str, Any]`
+    `parse_file(self, p: pathlib.Path) ‑> tuple[str, typing.Any] | None`
     :   Takes a path and tries to parse it with each self.file_parsers
 
     `put(self, url: str, data: url_cache.model.Summary) ‑> str`
@@ -59,6 +63,6 @@ Classes
         
         Overwrites previous files/information if it exists for the URL
 
-    `scan_directory(self, keydir: pathlib.Path) ‑> Dict[str, Any]`
+    `scan_directory(self, keydir: pathlib.Path) ‑> dict[str, typing.Any]`
     :   Given the target directory, recursively scans for files
         and applies the 'file_parsers' against each file

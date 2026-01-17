@@ -4,8 +4,7 @@ Module url_cache.sites.youtube.core
 Functions
 ---------
 
-    
-`get_yt_video_id(url: str) ‑> Optional[str]`
+`get_yt_video_id(url: str) ‑> str | None`
 :   Returns Video_ID extracting from the given url of Youtube
     Returns None if youtube ID could not be extracted
     

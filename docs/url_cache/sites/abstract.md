@@ -23,7 +23,7 @@ Classes
     `logger: logging.Logger`
     :
 
-    `response: Optional[requests.models.Response]`
+    `response: requests.models.Response | None`
     :
 
     ### Methods
@@ -31,7 +31,7 @@ Classes
     `extract_info(self, url: str, summary: url_cache.model.Summary) ‑> url_cache.model.Summary`
     :   Run requests, extract information from the cached response etc...
 
-    `file_parsers(self) ‑> List[url_cache.summary_cache.FileParser]`
+    `file_parsers(self) ‑> list[url_cache.summary_cache.FileParser[typing.Any]]`
     :   Lets Sites specify custom file parsers dynamically in each Site
         Each Site's file_parsers are added to the URLCache when its instantiated
 
@@ -45,5 +45,5 @@ Classes
         For example, youtube has lots of different ways of structuring a URL
         for a single video, but they all return the same information
 
-    `sleep(self) ‑> NoneType`
+    `sleep(self) ‑> None`
     :

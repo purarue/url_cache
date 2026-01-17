@@ -15,5 +15,5 @@ Classes
 
     ### Methods
 
-    `sleep(self) ‑> NoneType`
+    `sleep(self) ‑> None`
     :

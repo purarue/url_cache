@@ -6,14 +6,13 @@ saves that to cache. If something has already been requested, returns it from ca
 Functions
 ---------
 
-    
 `preprocess_url(url: str) ‑> str`
 :   Shorthand to expose default preprocess url steps as a function
 
 Classes
 -------
 
-`URLCache(*, cache_dir: Union[str, pathlib.Path, NoneType] = None, loglevel: int = 30, sleep_time: int = 5, additional_extractors: Optional[List[Any]] = None, file_parsers: Optional[List[url_cache.summary_cache.FileParser]] = None, options: Optional[Dict[str, Any]] = None)`
+`URLCache(*, cache_dir: str | pathlib.Path | None = None, loglevel: int = 30, sleep_time: int = 5, additional_extractors: list[typing.Any] | None = None, file_parsers: list[url_cache.summary_cache.FileParser[~T]] | None = None, options: dict[str, typing.Any] | None = None)`
 :   Main interface to the library
     
     sleep_time: time to wait between HTTP requests
@@ -32,7 +31,7 @@ Classes
         Save the parsed information in a local data directory
         If the URL already has cached data locally, returns that instead
 
-    `get_cache_dir(self, url: str) ‑> Optional[str]`
+    `get_cache_dir(self, url: str) ‑> str | None`
     :   If this URL is in cache, returns the location of the cache directory
         Returns None if it couldn't find a matching directory
 
@@ -54,5 +53,5 @@ Classes
         
         returns all the requested/parsed info as a models.Summary object
 
-    `sleep(self) ‑> NoneType`
+    `sleep(self) ‑> None`
     :

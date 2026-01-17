@@ -4,14 +4,13 @@ Module url_cache.model
 Functions
 ---------
 
-    
 `dumps(data: Any) ‑> str`
 :   Dump a Summary object to JSON
 
 Classes
 -------
 
-`Summary(url: str, data: Dict[str, Any] = <factory>, metadata: Dict[str, Any] = <factory>, html_summary: Optional[str] = None, timestamp: Optional[datetime.datetime] = None)`
+`Summary(url: str, data: dict[str, typing.Any] = <factory>, metadata: dict[str, typing.Any] = <factory>, html_summary: str | None = None, timestamp: datetime.datetime | None = None)`
 :   Represents all possible data for a URL
     
     URL
@@ -20,19 +19,19 @@ Classes
     Timestamp (when this information was scraped)
     Data (any other data extracted from this site)
 
-    ### Class variables
+    ### Instance variables
 
-    `data: Dict[str, Any]`
-    :
+    `data: dict[str, typing.Any]`
+    :   The type of the None singleton.
 
-    `html_summary: Optional[str]`
-    :
+    `html_summary: str | None`
+    :   The type of the None singleton.
 
-    `metadata: Dict[str, Any]`
-    :
+    `metadata: dict[str, typing.Any]`
+    :   The type of the None singleton.
 
-    `timestamp: Optional[datetime.datetime]`
-    :
+    `timestamp: datetime.datetime | None`
+    :   The type of the None singleton.
 
     `url: str`
-    :
+    :   The type of the None singleton.

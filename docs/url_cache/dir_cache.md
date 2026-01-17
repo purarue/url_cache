@@ -5,12 +5,10 @@ An hash-based, file system cache
 Functions
 ---------
 
-    
 `keyfile_matches_contents(key: str, path: str) ‑> bool`
 :   Helper function to check if a file matches the key we're trying to find
 
-    
-`subdirs(path: str) ‑> List[str]`
+`subdirs(path: str) ‑> list[str]`
 :   Returns a list of subdirectores (that exist) for a existing directory
 
 Classes

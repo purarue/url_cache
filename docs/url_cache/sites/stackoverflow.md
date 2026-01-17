@@ -14,5 +14,5 @@ Classes
 
     ### Methods
 
-    `extract_question_id(self, url: str) ‑> Optional[int]`
+    `extract_question_id(self, url: str) ‑> int | None`
     :   Extract a stackoverflow question ID from a URL

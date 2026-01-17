@@ -4,7 +4,7 @@ Module url_cache.session
 Classes
 -------
 
-`SaveSession(cb_func: Callable[[requests.models.Response], NoneType])`
+`SaveSession(cb_func: Callable[[requests.models.Response], None])`
 :   A subclass of requests.Session which runs a callback function
     after each request.
     
