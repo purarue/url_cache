@@ -39,7 +39,7 @@ class MyAnimeList(AbstractSite):
         ]
 
     def matches_site(self, url: str) -> bool:
-        m: Optional[MalParseResult] = self.url_parser.parse_url(url)
+        m: MalParseResult | None = self.url_parser.parse_url(url)
         return m is not None
 
     def sleep(self) -> None:
@@ -57,7 +57,7 @@ class MyAnimeList(AbstractSite):
         return data
 
     def extract_info(self, url: str, summary: Summary) -> Summary:
-        m: Optional[MalParseResult] = self.url_parser.parse_url(url)
+        m: MalParseResult | None = self.url_parser.parse_url(url)
         if m is None:
             return summary
         data: dict[str, Json] = {}
@@ -74,7 +74,7 @@ class MyAnimeList(AbstractSite):
         return summary
 
     def preprocess_url(self, url: str) -> str:
-        m: Optional[MalParseResult] = self.url_parser.parse_url(url)
+        m: MalParseResult | None = self.url_parser.parse_url(url)
         if m is not None:
             return m.cleaned
         return url

@@ -5,7 +5,8 @@ CLI interface
 import sys
 import logging
 from pathlib import Path
-from typing import Optional, Callable
+from typing import Optional
+from collections.abc import Callable
 
 import click
 
@@ -19,7 +20,7 @@ from .core import (
 from .model import dumps
 
 # cache object for all commands
-ucache: Optional[URLCache] = None
+ucache: URLCache | None = None
 
 OPTIONS_HELP: dict[str, str] = {
     "subtitle_language": "Subtitle language for Youtube Subtitles",

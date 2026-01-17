@@ -13,7 +13,7 @@ from typing import Optional, Union
 pat = re.compile(r'<?text start="(\d+\.\d+)" dur="(\d+\.\d+)">(.*)</text>?')
 
 
-def format_srt_time(sec_time: Union[str, float]) -> str:
+def format_srt_time(sec_time: str | float) -> str:
     """Convert a time in seconds (google's transcript) to srt time format."""
     sec, micro = str(sec_time).split(".")
     m, s = divmod(int(sec), 60)
@@ -40,7 +40,7 @@ def to_srt(buf: str) -> str:
     srt_data: list[str] = "".join(buf.replace("\n", " ")).split("><")
     i: int = 0
     for text in srt_data:
-        parsed: Optional[tuple[str, str, str]] = parse_line(text)
+        parsed: tuple[str, str, str] | None = parse_line(text)
         if parsed is not None:
             i += 1
             out_srt.append(format_srt_line(i, parsed))
@@ -48,7 +48,7 @@ def to_srt(buf: str) -> str:
     return out_srt_string
 
 
-def parse_line(text: str) -> Optional[tuple[str, str, str]]:
+def parse_line(text: str) -> tuple[str, str, str] | None:
     """Parse a subtitle."""
     m = re.match(pat, text)
     if m:

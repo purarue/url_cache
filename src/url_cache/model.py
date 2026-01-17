@@ -24,8 +24,8 @@ class Summary:
     # in the ./data subdirectory
     data: Json = field(default_factory=dict)
     metadata: Json = field(default_factory=dict)
-    html_summary: Optional[str] = None
-    timestamp: Optional[datetime] = None
+    html_summary: str | None = None
+    timestamp: datetime | None = None
 
 
 def _default(o: Any) -> Any:

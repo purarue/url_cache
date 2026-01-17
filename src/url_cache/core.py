@@ -56,12 +56,12 @@ class URLCache:
     def __init__(
         self,
         *,
-        cache_dir: Optional[Union[str, Path]] = None,
+        cache_dir: str | Path | None = None,
         loglevel: int = DEFAULT_LOGLEVEL,
         sleep_time: int = DEFAULT_SLEEP_TIME,
-        additional_extractors: Optional[list[Any]] = None,
-        file_parsers: Optional[list[FileParser[T]]] = None,
-        options: Optional[Options] = None,
+        additional_extractors: list[Any] | None = None,
+        file_parsers: list[FileParser[T]] | None = None,
+        options: Options | None = None,
     ) -> None:
         """
         Main interface to the library
@@ -72,7 +72,7 @@ class URLCache:
         """
 
         # handle cache dir
-        cdir: Optional[Path] = None
+        cdir: Path | None = None
         if cache_dir is not None:
             cdir = normalize_path(cache_dir)
         else:
@@ -111,7 +111,7 @@ class URLCache:
         self.options: Options = {} if options is None else options
         self._set_option_defaults()
 
-        self.expiry_duration: Optional[timedelta] = None
+        self.expiry_duration: timedelta | None = None
         if self.options["expiry_duration"] is not None:
             assert isinstance(self.options["expiry_duration"], str)
             self.expiry_duration = parse_timedelta_string(
@@ -124,7 +124,7 @@ class URLCache:
         self.lassie: Lassie = ll
 
         # default 'last response received' to None
-        self._response: Optional[Response] = None
+        self._response: Response | None = None
 
         # initialize site-specific parsers
         self.extractor_classes = EXTRACTORS
@@ -220,7 +220,7 @@ class URLCache:
     @backoff.on_exception(
         fibo_backoff, URLCacheRequestException, max_tries=3, on_backoff=backoff_warn  # type: ignore[arg-type]
     )
-    def _fetch_lassie(self, url: str) -> Optional[Json]:
+    def _fetch_lassie(self, url: str) -> Json | None:
         self.logger.debug(f"Fetching metadata for {url}")
         try:
             meta: Json = self.lassie.fetch(
@@ -271,7 +271,7 @@ class URLCache:
             self.summary_cache.put(uurl, data)
             return data
         # returns None if not present
-        fdata: Optional[Summary] = self.summary_cache.get(uurl)
+        fdata: Summary | None = self.summary_cache.get(uurl)
         if fdata is None:
             raise URLCacheException(
                 f"Failure retrieving information from cache for {url}"
@@ -292,7 +292,7 @@ class URLCache:
         uurl: str = self.preprocess_url(url)
         return self.summary_cache.has(uurl)
 
-    def get_cache_dir(self, url: str) -> Optional[str]:
+    def get_cache_dir(self, url: str) -> str | None:
         """
         If this URL is in cache, returns the location of the cache directory
         Returns None if it couldn't find a matching directory

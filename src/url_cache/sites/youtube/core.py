@@ -8,7 +8,7 @@ from ..abstract import AbstractSite
 
 
 # From: https://gist.github.com/kmonsoor/2a1afba4ee127cce50a0
-def get_yt_video_id(url: str) -> Optional[str]:
+def get_yt_video_id(url: str) -> str | None:
     """
     Returns Video_ID extracting from the given url of Youtube
     Returns None if youtube ID could not be extracted
@@ -28,7 +28,7 @@ def get_yt_video_id(url: str) -> Optional[str]:
     if url.startswith(("youtu", "www")):
         url = "http://" + url
 
-    query: Optional[ParseResult] = urlparse(url)
+    query: ParseResult | None = urlparse(url)
 
     if query is None:
         return None
@@ -66,7 +66,7 @@ class Youtube(AbstractSite):
         summary = self._delete_unnecessary_info(summary)
         # if user didn't specify to skip trying to download subtitles
         if not self._uc.options["skip_subtitles"]:
-            yt_id: Optional[str] = get_yt_video_id(url)
+            yt_id: str | None = get_yt_video_id(url)
             # exit early if the URL doesn't match the site, this shouldn't have been called anyways
             if yt_id is None:
                 return summary
@@ -87,7 +87,7 @@ class Youtube(AbstractSite):
         return summary
 
     def preprocess_url(self, url: str) -> str:
-        yt_id: Optional[str] = get_yt_video_id(url)
+        yt_id: str | None = get_yt_video_id(url)
         if yt_id is None:
             # failed, just return URL as it was
             return url

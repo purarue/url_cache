@@ -4,9 +4,9 @@ from typing import (
     Optional,
     Generic,
     Any,
-    Callable,
     TypeVar,
 )
+from collections.abc import Callable
 from pathlib import Path
 
 from .exceptions import URLCacheException
@@ -140,7 +140,7 @@ class SummaryDirCache:
     """
 
     def __init__(
-        self, data_dir: Path, *, file_parsers: Optional[list[FileParser[Any]]] = None
+        self, data_dir: Path, *, file_parsers: list[FileParser[Any]] | None = None
     ):
         self.data_dir: Path = data_dir
         self.dir_cache = DirCache(str(self.data_dir))
@@ -152,7 +152,7 @@ class SummaryDirCache:
             parser.name: parser for parser in self.file_parsers
         }
 
-    def parse_file(self, p: Path) -> Optional[tuple[str, Any]]:
+    def parse_file(self, p: Path) -> tuple[str, Any] | None:
         """
         Takes a path and tries to parse it with each self.file_parsers
         """
@@ -188,7 +188,7 @@ class SummaryDirCache:
 
         return res
 
-    def get(self, url: str) -> Optional[Summary]:
+    def get(self, url: str) -> Summary | None:
         """
         Get data for the 'url' from cache, or None if it doesn't exist
         """
@@ -226,7 +226,7 @@ class SummaryDirCache:
 
         for attr in SUMMARY_ATTRS:
             # get the value from the Summary dataclass
-            val: Optional[Any] = getattr(data, attr, None)
+            val: Any | None = getattr(data, attr, None)
             if val is None:
                 continue
 

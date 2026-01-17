@@ -10,7 +10,7 @@ class StackOverflow(AbstractSite):
     StackOverflow extractor to normalize question IDs/extract question/answers
     """
 
-    def extract_question_id(self, url: str) -> Optional[int]:
+    def extract_question_id(self, url: str) -> int | None:
         """
         Extract a stackoverflow question ID from a URL
         """

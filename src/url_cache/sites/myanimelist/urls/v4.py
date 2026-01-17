@@ -67,7 +67,7 @@ class Version4:
     def __init__(self, base_url: str = JIKAN_BASE):
         self.base = base_url.rstrip("/")
 
-    def _extract_dispatch(self, endpoint: str, mal_id: int) -> Optional[MalParseResult]:
+    def _extract_dispatch(self, endpoint: str, mal_id: int) -> MalParseResult | None:
         if endpoint == "anime":
             return self._extract_anime(mal_id)
         elif endpoint == "manga":
@@ -152,7 +152,7 @@ class Version4:
             ],
         )
 
-    def parse_url(self, url: str) -> Optional[MalParseResult]:
+    def parse_url(self, url: str) -> MalParseResult | None:
         """
         Given a URL, if extra information can be extracted by requesting info from Jikan
         this cleans the URL to reduce duplicates and returns the Jikan URLs to request
@@ -166,7 +166,7 @@ class Version4:
             return None
 
         # match pages like /anime/4394
-        match: Optional[re.Match[str]] = None
+        match: re.Match[str] | None = None
         match = re.match(REST_MATCH_RE, res.path)
         if match is not None:
             return self._extract_dispatch(match.group(1), int(match.group(2)))

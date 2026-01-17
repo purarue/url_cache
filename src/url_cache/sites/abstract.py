@@ -52,7 +52,7 @@ class AbstractSite(ABC):
         return url
 
     @property
-    def response(self) -> Optional[Response]:
+    def response(self) -> Response | None:
         return self._uc._response
 
     @property
